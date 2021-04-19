@@ -27,20 +27,15 @@ class Hangman:
     self.guesses.add(letter)
     if letter in self.word:
       print("Good guess! Letters used: {0}".format(self.GetLettersUsed()))
-
-      if (self.GetDisplayWord() == self.word):
-        print()
-        print("Congratulations! You won!! The word was {0}.".format(self.word))
-        #exit(-1)
       return True
     else:
       self.triesAllowed -= 1
       print()
       print("Too bad! Letters used: {0}".format(self.GetLettersUsed()))
 
-      if self.triesAllowed == 0:
+      if (self.triesAllowed == 0):
        print("You lost! The word was {0}.".format(self.word))
-      return False
+       return False
 
   def GetNumTriesLeft(self):
     """Return the number of tries left."""
@@ -85,12 +80,17 @@ if __name__ == "__main__":
   while game.GetNumTriesLeft() > 0:
     print()
 
+    game.GetGameResult()
     print("Here's your word so far: {0}".format(game.GetDisplayWord()))
     print("You have {0} guesses left.".format(game.GetNumTriesLeft()))
     print()
     userInput = str(input("Guess a letter: "))
 
-    if userInput.islower():
+    if userInput.islower() and (len(userInput) == 1):
       game.Guess(userInput)
     else:
       print("Invalid character! Try again...")
+
+    if game.GetGameResult():
+      print("Congratulations! You won!! The word was {0}.".format(game.word))
+      break
